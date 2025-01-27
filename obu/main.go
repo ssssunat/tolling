@@ -12,7 +12,7 @@ import (
 
 const wsEndpoint = "ws://127.0.0.1:30000/ws"
 
-var senInterval = time.Second
+var senInterval = time.Second * 5
 
 func sendOBUData(conn *websocket.Conn, data types.OBUData) error {
 	return conn.WriteJSON(data)
