@@ -9,6 +9,7 @@ import (
 // we lke interfacec with er ::)
 type CalculatorServicer interface {
 	CalculateDistance(types.OBUData) (float64, error)
+	
 }
 
 type CalculatorService struct {
@@ -16,8 +17,7 @@ type CalculatorService struct {
 }
 
 func NewCalculatorService() *CalculatorService {
-	return &CalculatorService{
-	}
+	return &CalculatorService{}
 }
 
 // pos1 x y
