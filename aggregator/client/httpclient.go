@@ -2,6 +2,7 @@ package client
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -9,18 +10,18 @@ import (
 	"github.com/ssssunat/tolling/types"
 )
 
-type Client struct {
+type HTTPClient struct {
 	Endpoint string
 }
 
-func Newclient(endpoint string) *Client {
-	return &Client{
+func NewHTTPClient(endpoint string) *HTTPClient {
+	return &HTTPClient{
 		Endpoint: endpoint,
 	}
 }
 
-func (c *Client) AggregateInvoice(dist types.Distance) error {
-	b, err := json.Marshal(dist)
+func (c *HTTPClient) Aggregate(ctx context.Context, aggReq *types.AggregateRequest) error {
+	b, err := json.Marshal(aggReq)
 	if err != nil {
 		return err
 	}
@@ -33,7 +34,7 @@ func (c *Client) AggregateInvoice(dist types.Distance) error {
 		return err
 	}
 	if resp.StatusCode != http.StatusOK {
-		 return fmt.Errorf("the service responded with non 200 status code %d", resp.StatusCode)
+		return fmt.Errorf("the service responded with non 200 status code %d", resp.StatusCode)
 	}
 	return nil
 }
