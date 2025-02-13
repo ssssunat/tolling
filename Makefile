@@ -14,7 +14,11 @@ agg:
 	@go build -o bin/aggregator ./aggregator
 	@./bin/aggregator 
 
+gate:
+	@go build -o bin/gate gateway/main.go 
+	@./bin/gate
+
 proto:
 	protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative types/ptypes.proto
 
-.PHONY: obu agg proto
+.PHONY: obu agg proto gate

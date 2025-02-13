@@ -26,7 +26,7 @@ go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
 ```
 3. Note that you need to set the /go/bin directory in your path
 ```
-PATH="${PATH}:${HOME}/go/bin"
+    PATH="${PATH}:${HOME}/go/bin"   
 ```
 
 4. install package dependencies
