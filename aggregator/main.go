@@ -17,7 +17,7 @@ import (
 )
 
 func main() {
-	httpListenAddr := flag.String("httpAddr", ":3000", "the listen address of HTTP server")
+	httpListenAddr := flag.String("httpAddr", ":4000", "the listen address of HTTP server")
 	grpcListenAddr := flag.String("grpcAddr", ":3001", "the listen address of GRPC server")
 	flag.Parse()
 	var (
@@ -78,6 +78,12 @@ func handleGetInvoice(svc Aggregator) http.HandlerFunc {
 
 func handleAggregate(svc Aggregator) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != "POST" {
+			writeJSON(w, http.StatusBadRequest, map[string]string{
+				"error": "method not supported",
+			})
+			return		
+		}
 		var distance types.Distance
 		if err := json.NewDecoder(r.Body).Decode(&distance); err != nil {
 			writeJSON(w, http.StatusBadRequest, map[string]string{
